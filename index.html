@@ -189,7 +189,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="title">Namesake Quiz</h1>
+            <h1 class="title">Namesake Character Quiz</h1>
             <p class="subtitle">By Ron, Nihar, Aryan, Miraya, and Harjas</p>
         </div>
         
@@ -203,45 +203,45 @@
             constructor() {
                 this.questions = [
                     // Index 0 - Starting question
-                    {text: 'Do you sometimes feel uncomfortable with your cultural identity?', nextIfYes: 1, nextIfNo: 2, gogolAnswer: true},
+                    {text: 'Do you sometimes feel like you don\'t quite belong anywhere?', nextIfYes: 1, nextIfNo: 2, ashimaScore: 2, ashokeScore: 1, gogolScore: 2},
                     
                     // Index 1-2 - Level 2
-                    {text: 'Have you ever wanted to change something fundamental about yourself?', nextIfYes: 3, nextIfNo: 4, gogolAnswer: true},
-                    {text: 'Do you feel more comfortable blending in rather than standing out?', nextIfYes: 5, nextIfNo: 6, gogolAnswer: true},
+                    {text: 'Do you find comfort in maintaining traditions and routines?', nextIfYes: 3, nextIfNo: 4, ashimaScore: 2, ashokeScore: 2, gogolScore: 0},
+                    {text: 'Are you someone who adapts easily to new situations?', nextIfYes: 5, nextIfNo: 6, ashimaScore: 0, ashokeScore: 2, gogolScore: 1},
                     
                     // Index 3-6 - Level 3
-                    {text: 'Do you think your name affects how others perceive you?', nextIfYes: 7, nextIfNo: 8, gogolAnswer: true},
-                    {text: 'Have you ever felt embarrassed by your family\'s traditions?', nextIfYes: 9, nextIfNo: 10, gogolAnswer: true},
-                    {text: 'Do you prefer to keep your personal life private from most people?', nextIfYes: 11, nextIfNo: 12, gogolAnswer: true},
-                    {text: 'Would you rather have a more common, easily pronounced name?', nextIfYes: 13, nextIfNo: 14, gogolAnswer: true},
+                    {text: 'Do you believe that family should always come first?', nextIfYes: 7, nextIfNo: 8, ashimaScore: 2, ashokeScore: 2, gogolScore: 0},
+                    {text: 'Do you often feel misunderstood by the people around you?', nextIfYes: 9, nextIfNo: 10, ashimaScore: 1, ashokeScore: 0, gogolScore: 2},
+                    {text: 'Are you comfortable taking risks for new opportunities?', nextIfYes: 11, nextIfNo: 12, ashimaScore: 0, ashokeScore: 2, gogolScore: 1},
+                    {text: 'Do you prefer to keep your personal struggles to yourself?', nextIfYes: 13, nextIfNo: 14, ashimaScore: 2, ashokeScore: 1, gogolScore: 1},
                     
                     // Index 7-14 - Level 4
-                    {text: 'Do you sometimes feel caught between two different cultures?', nextIfYes: 15, nextIfNo: 16, gogolAnswer: true},
-                    {text: 'Have you ever lied about or hidden aspects of your background?', nextIfYes: 17, nextIfNo: 18, gogolAnswer: true},
-                    {text: 'Do you value your independence over family expectations?', nextIfYes: 19, nextIfNo: 20, gogolAnswer: true},
-                    {text: 'Would you choose love over family approval?', nextIfYes: 21, nextIfNo: 22, gogolAnswer: true},
-                    {text: 'Do you feel like you don\'t fully belong in either of your cultures?', nextIfYes: 23, nextIfNo: 24, gogolAnswer: true},
-                    {text: 'Have you ever felt ashamed of your parents\' accent or mannerisms?', nextIfYes: 25, nextIfNo: 26, gogolAnswer: true},
-                    {text: 'Do you think having a different name would make life easier?', nextIfYes: 27, nextIfNo: 28, gogolAnswer: true},
-                    {text: 'Do you sometimes rebel against your family\'s expectations?', nextIfYes: 29, nextIfNo: 30, gogolAnswer: true},
+                    {text: 'Do you find strength in your cultural heritage and values?', nextIfYes: 15, nextIfNo: 16, ashimaScore: 2, ashokeScore: 2, gogolScore: 0},
+                    {text: 'Do you sometimes rebel against expectations placed on you?', nextIfYes: 17, nextIfNo: 18, ashimaScore: 0, ashokeScore: 0, gogolScore: 2},
+                    {text: 'Are you someone who sacrifices personal desires for family harmony?', nextIfYes: 19, nextIfNo: 20, ashimaScore: 2, ashokeScore: 1, gogolScore: 0},
+                    {text: 'Do you believe that education and hard work can overcome any obstacle?', nextIfYes: 21, nextIfNo: 22, ashimaScore: 1, ashokeScore: 2, gogolScore: 0},
+                    {text: 'Are you pragmatic and good at making difficult decisions?', nextIfYes: 23, nextIfNo: 24, ashimaScore: 1, ashokeScore: 2, gogolScore: 0},
+                    {text: 'Do you often feel homesick or nostalgic for a place you can\'t return to?', nextIfYes: 25, nextIfNo: 26, ashimaScore: 2, ashokeScore: 1, gogolScore: 1},
+                    {text: 'Do you worry about losing touch with your roots?', nextIfYes: 27, nextIfNo: 28, ashimaScore: 2, ashokeScore: 1, gogolScore: 0},
+                    {text: 'Are you someone who questions authority and established ways of doing things?', nextIfYes: 29, nextIfNo: 30, ashimaScore: 0, ashokeScore: 0, gogolScore: 2},
                     
                     // Index 15-30 - Level 5 (Final questions)
-                    {text: 'Do you struggle with accepting yourself as you are?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
-                    {text: 'Have you ever felt like an outsider in your own community?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
-                    {text: 'Do you find it hard to explain your identity to others?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
-                    {text: 'Would you rather fit in than be true to your heritage?', nextIfYes: null, nextIfNo: null, gogolAnswer: false},
-                    {text: 'Do you feel pressure to succeed academically or professionally?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
-                    {text: 'Have you ever felt disconnected from your parents\' homeland?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
-                    {text: 'Do you think your cultural background is a burden sometimes?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
-                    {text: 'Would you be willing to change yourself to be accepted by others?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
-                    {text: 'Do you ever feel guilty about wanting to be different from your family?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
-                    {text: 'Have you ever wished you were born into a different family?', nextIfYes: null, nextIfNo: null, gogolAnswer: false},
-                    {text: 'Do you find it difficult to date outside your cultural background?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
-                    {text: 'Would you hide your real name on a first date?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
-                    {text: 'Do you feel like you have to choose between being American and your heritage?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
-                    {text: 'Have you ever felt like your parents don\'t understand you?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
-                    {text: 'Do you think identity should be chosen rather than inherited?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
-                    {text: 'Would you rather be judged for who you are than what you represent?', nextIfYes: null, nextIfNo: null, gogolAnswer: true}
+                    {text: 'Do you find joy in cooking and sharing meals with others?', nextIfYes: null, nextIfNo: null, ashimaScore: 2, ashokeScore: 1, gogolScore: 0},
+                    {text: 'Are you someone who embraces change as an opportunity for growth?', nextIfYes: null, nextIfNo: null, ashimaScore: 0, ashokeScore: 2, gogolScore: 1},
+                    {text: 'Do you sometimes feel caught between different versions of yourself?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 0, gogolScore: 2},
+                    {text: 'Do you believe that love should transcend cultural and social boundaries?', nextIfYes: null, nextIfNo: null, ashimaScore: 0, ashokeScore: 1, gogolScore: 2},
+                    {text: 'Are you someone who values stability and security above adventure?', nextIfYes: null, nextIfNo: null, ashimaScore: 2, ashokeScore: 1, gogolScore: 0},
+                    {text: 'Do you feel responsible for preserving your family\'s traditions?', nextIfYes: null, nextIfNo: null, ashimaScore: 2, ashokeScore: 1, gogolScore: 0},
+                    {text: 'Are you comfortable being different from those around you?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 2, gogolScore: 0},
+                    {text: 'Do you sometimes feel guilty about wanting independence?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 0, gogolScore: 2},
+                    {text: 'Are you someone who finds beauty in literature and the arts?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 2, gogolScore: 1},
+                    {text: 'Do you believe that people should create their own identity rather than inherit it?', nextIfYes: null, nextIfNo: null, ashimaScore: 0, ashokeScore: 1, gogolScore: 2},
+                    {text: 'Are you someone who prefers to blend in rather than stand out?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 1, gogolScore: 2},
+                    {text: 'Do you find comfort in routine and familiar surroundings?', nextIfYes: null, nextIfNo: null, ashimaScore: 2, ashokeScore: 1, gogolScore: 0},
+                    {text: 'Are you willing to make personal sacrifices for the people you love?', nextIfYes: null, nextIfNo: null, ashimaScore: 2, ashokeScore: 2, gogolScore: 1},
+                    {text: 'Do you believe that names and labels define who we are?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 0, gogolScore: 2},
+                    {text: 'Are you someone who sees challenges as opportunities to prove yourself?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 2, gogolScore: 1},
+                    {text: 'Do you believe that home is more about people than places?', nextIfYes: null, nextIfNo: null, ashimaScore: 2, ashokeScore: 2, gogolScore: 1}
                 ];
                 
                 this.answers = [];
@@ -260,8 +260,8 @@
                 const content = document.getElementById('content');
                 content.innerHTML = `
                     <div class="fade-in">
-                        <h2 style="font-size: 1.8rem; margin-bottom: 20px; color: #333;">Welcome to the Namesake Quiz!</h2>
-                        <p class="intro-text">Discover how similar you are to Gogol from Jhumpa Lahiri's "The Namesake"</p>
+                        <h2 style="font-size: 1.8rem; margin-bottom: 20px; color: #333;">Welcome to the Namesake Character Quiz!</h2>
+                        <p class="intro-text">Discover which character from Jhumpa Lahiri's "The Namesake" you're most similar to: Ashima, Ashoke, or Gogol</p>
                         <button class="btn btn-primary" onclick="quiz.startQuiz()">Start Quiz</button>
                     </div>
                 `;
@@ -294,7 +294,10 @@
                 this.answers.push({
                     question: current.text,
                     answer: isYes ? 'Yes' : 'No',
-                    userAnswer: isYes
+                    userAnswer: isYes,
+                    ashimaScore: isYes ? current.ashimaScore : 0,
+                    ashokeScore: isYes ? current.ashokeScore : 0,
+                    gogolScore: isYes ? current.gogolScore : 0
                 });
                 
                 if (nextIndex === null) {
@@ -306,38 +309,62 @@
                 }
             }
             
-            calculateSimilarityPercentage() {
-                let matches = 0;
-                for (let i = 0; i < this.answers.length; i++) {
-                    const answerRecord = this.answers[i];
-                    const questionIndex = this.questions.findIndex(q => q.text === answerRecord.question);
-                    if (questionIndex !== -1) {
-                        const question = this.questions[questionIndex];
-                        if (answerRecord.userAnswer === question.gogolAnswer) {
-                            matches++;
-                        }
-                    }
+            calculateCharacterMatch() {
+                let ashimaTotal = 0;
+                let ashokeTotal = 0;
+                let gogolTotal = 0;
+                
+                for (let answer of this.answers) {
+                    ashimaTotal += answer.ashimaScore;
+                    ashokeTotal += answer.ashokeScore;
+                    gogolTotal += answer.gogolScore;
                 }
-                return Math.round((matches / this.answers.length) * 100);
+                
+                const maxScore = Math.max(ashimaTotal, ashokeTotal, gogolTotal);
+                let character = '';
+                let percentage = 0;
+                
+                if (ashimaTotal === maxScore) {
+                    character = 'Ashima';
+                    percentage = Math.round((ashimaTotal / (this.answers.length * 2)) * 100);
+                } else if (ashokeTotal === maxScore) {
+                    character = 'Ashoke';
+                    percentage = Math.round((ashokeTotal / (this.answers.length * 2)) * 100);
+                } else {
+                    character = 'Gogol';
+                    percentage = Math.round((gogolTotal / (this.answers.length * 2)) * 100);
+                }
+                
+                return { character, percentage };
             }
             
-            getSimilarityMessage(percentage) {
-                if (percentage >= 80) {
-                    return "You and Gogol are remarkably similar! Like him, you struggle with identity, belonging, and the tension between heritage and personal freedom.";
-                } else if (percentage >= 60) {
-                    return "You share many traits with Gogol. You understand the challenges of navigating between cultures and finding your own path.";
-                } else if (percentage >= 40) {
-                    return "You have some similarities with Gogol, particularly in questioning identity and seeking acceptance, though your approaches may differ.";
-                } else if (percentage >= 20) {
-                    return "You share a few traits with Gogol, but you seem more comfortable with your identity and cultural background than he was.";
-                } else {
-                    return "You and Gogol are quite different. You appear more confident in your identity and comfortable with your heritage.";
-                }
+            getCharacterMessage(character, percentage) {
+                const messages = {
+                    'Ashima': {
+                        high: "You're most like Ashima! You deeply value family, tradition, and cultural heritage. Like her, you find strength in maintaining connections to your roots while adapting to new circumstances. You're nurturing, resilient, and believe that home is created through love and shared meals.",
+                        medium: "You share many qualities with Ashima. You appreciate tradition and family bonds, though you may be more open to change than she initially was. Like her, you understand the importance of preserving cultural identity while building a new life.",
+                        low: "You have some similarities to Ashima, particularly in your appreciation for family and stability. However, you may be more willing to embrace change and individual freedom than she was."
+                    },
+                    'Ashoke': {
+                        high: "You're most like Ashoke! You're pragmatic, optimistic, and believe in the power of education and hard work. Like him, you're willing to take risks for better opportunities and can find meaning in literature and learning. You're someone who builds bridges between cultures and generations.",
+                        medium: "You share many traits with Ashoke. You're thoughtful and adaptable, with a strong belief in creating opportunities for yourself and others. Like him, you understand that sometimes sacrifices are necessary for long-term growth.",
+                        low: "You have some similarities to Ashoke, especially in your practical approach to life and appreciation for learning. However, you may be less willing to make personal sacrifices or may approach change differently."
+                    },
+                    'Gogol': {
+                        high: "You're most like Gogol! You question identity, tradition, and your place in the world. Like him, you sometimes feel caught between different expectations and struggle with belonging. You value independence and the right to define yourself, even when it creates conflict.",
+                        medium: "You share many qualities with Gogol. You understand the tension between honoring your heritage and forging your own path. Like him, you sometimes feel misunderstood and are searching for your authentic self.",
+                        low: "You have some similarities to Gogol, particularly in questioning established norms and seeking independence. However, you may be more comfortable with your identity and less conflicted about your cultural background."
+                    }
+                };
+                
+                if (percentage >= 70) return messages[character].high;
+                if (percentage >= 50) return messages[character].medium;
+                return messages[character].low;
             }
             
             showResults() {
-                const percentage = this.calculateSimilarityPercentage();
-                const message = this.getSimilarityMessage(percentage);
+                const result = this.calculateCharacterMatch();
+                const message = this.getCharacterMessage(result.character, result.percentage);
                 const content = document.getElementById('content');
                 
                 content.innerHTML = `
@@ -345,8 +372,8 @@
                         <h2 class="result-title">Quiz Complete!</h2>
                         
                         <div class="percentage-display">
-                            <div class="percentage-number">${percentage}%</div>
-                            <div class="percentage-label">Similar to Gogol</div>
+                            <div class="percentage-number">${result.percentage}%</div>
+                            <div class="percentage-label">Match with ${result.character}</div>
                         </div>
                         
                         <p class="result-message">${message}</p>
