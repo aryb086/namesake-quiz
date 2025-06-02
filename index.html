@@ -134,31 +134,74 @@
             margin-bottom: 20px;
         }
 
-        .percentage-display {
+        .character-results {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .character-score {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid;
+        }
+
+        .character-score.ashima {
+            border-left-color: #f093fb;
+        }
+
+        .character-score.ashoke {
+            border-left-color: #4facfe;
+        }
+
+        .character-score.gogol {
+            border-left-color: #a8edea;
+        }
+
+        .character-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .character-percentage {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .character-score.ashima .character-percentage {
+            color: #f093fb;
+        }
+
+        .character-score.ashoke .character-percentage {
+            color: #4facfe;
+        }
+
+        .character-score.gogol .character-percentage {
+            color: #a8edea;
+        }
+
+        .character-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .highest-match {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin: 20px 0;
             box-shadow: 0 10px 30px rgba(240, 147, 251, 0.3);
         }
 
-        .percentage-number {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .percentage-label {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .result-message {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #555;
-            margin: 20px 0;
+        .highest-match .character-name,
+        .highest-match .character-percentage,
+        .highest-match .character-description {
+            color: white;
         }
 
         .fade-in {
@@ -261,7 +304,7 @@
                 content.innerHTML = `
                     <div class="fade-in">
                         <h2 style="font-size: 1.8rem; margin-bottom: 20px; color: #333;">Welcome to the Namesake Character Quiz!</h2>
-                        <p class="intro-text">Discover which character from Jhumpa Lahiri's "The Namesake" you're most similar to: Ashima, Ashoke, or Gogol</p>
+                        <p class="intro-text">Discover your similarity to each character from Jhumpa Lahiri's "The Namesake": Ashima, Ashoke, and Gogol</p>
                         <button class="btn btn-primary" onclick="quiz.startQuiz()">Start Quiz</button>
                     </div>
                 `;
@@ -309,7 +352,7 @@
                 }
             }
             
-            calculateCharacterMatch() {
+            calculateAllCharacterScores() {
                 let ashimaTotal = 0;
                 let ashokeTotal = 0;
                 let gogolTotal = 0;
@@ -320,63 +363,83 @@
                     gogolTotal += answer.gogolScore;
                 }
                 
+                // Calculate maximum possible score for percentage calculation
+                const maxPossibleScore = this.answers.length * 2;
+                
+                const ashimaPercentage = Math.round((ashimaTotal / maxPossibleScore) * 100);
+                const ashokePercentage = Math.round((ashokeTotal / maxPossibleScore) * 100);
+                const gogolPercentage = Math.round((gogolTotal / maxPossibleScore) * 100);
+                
+                // Determine which is highest
                 const maxScore = Math.max(ashimaTotal, ashokeTotal, gogolTotal);
-                let character = '';
-                let percentage = 0;
+                let topCharacter = '';
+                if (ashimaTotal === maxScore) topCharacter = 'Ashima';
+                else if (ashokeTotal === maxScore) topCharacter = 'Ashoke';
+                else topCharacter = 'Gogol';
                 
-                if (ashimaTotal === maxScore) {
-                    character = 'Ashima';
-                    percentage = Math.round((ashimaTotal / (this.answers.length * 2)) * 100);
-                } else if (ashokeTotal === maxScore) {
-                    character = 'Ashoke';
-                    percentage = Math.round((ashokeTotal / (this.answers.length * 2)) * 100);
-                } else {
-                    character = 'Gogol';
-                    percentage = Math.round((gogolTotal / (this.answers.length * 2)) * 100);
-                }
-                
-                return { character, percentage };
+                return {
+                    ashima: { score: ashimaTotal, percentage: ashimaPercentage },
+                    ashoke: { score: ashokeTotal, percentage: ashokePercentage },
+                    gogol: { score: gogolTotal, percentage: gogolPercentage },
+                    topCharacter: topCharacter
+                };
             }
             
-            getCharacterMessage(character, percentage) {
-                const messages = {
+            getCharacterDescription(character, percentage) {
+                const descriptions = {
                     'Ashima': {
-                        high: "You're most like Ashima! You deeply value family, tradition, and cultural heritage. Like her, you find strength in maintaining connections to your roots while adapting to new circumstances. You're nurturing, resilient, and believe that home is created through love and shared meals.",
-                        medium: "You share many qualities with Ashima. You appreciate tradition and family bonds, though you may be more open to change than she initially was. Like her, you understand the importance of preserving cultural identity while building a new life.",
-                        low: "You have some similarities to Ashima, particularly in your appreciation for family and stability. However, you may be more willing to embrace change and individual freedom than she was."
+                        high: "You deeply value family, tradition, and cultural heritage. Like Ashima, you find strength in maintaining connections to your roots while adapting to new circumstances.",
+                        medium: "You appreciate tradition and family bonds, though you may be more open to change than Ashima initially was.",
+                        low: "You share some of Ashima's appreciation for family and stability, though you may be more willing to embrace individual freedom."
                     },
                     'Ashoke': {
-                        high: "You're most like Ashoke! You're pragmatic, optimistic, and believe in the power of education and hard work. Like him, you're willing to take risks for better opportunities and can find meaning in literature and learning. You're someone who builds bridges between cultures and generations.",
-                        medium: "You share many traits with Ashoke. You're thoughtful and adaptable, with a strong belief in creating opportunities for yourself and others. Like him, you understand that sometimes sacrifices are necessary for long-term growth.",
-                        low: "You have some similarities to Ashoke, especially in your practical approach to life and appreciation for learning. However, you may be less willing to make personal sacrifices or may approach change differently."
+                        high: "You're pragmatic, optimistic, and believe in the power of education and hard work. Like Ashoke, you're willing to take risks for better opportunities.",
+                        medium: "You're thoughtful and adaptable, with a strong belief in creating opportunities for yourself and others.",
+                        low: "You share some of Ashoke's practical approach to life, though you may approach change and sacrifice differently."
                     },
                     'Gogol': {
-                        high: "You're most like Gogol! You question identity, tradition, and your place in the world. Like him, you sometimes feel caught between different expectations and struggle with belonging. You value independence and the right to define yourself, even when it creates conflict.",
-                        medium: "You share many qualities with Gogol. You understand the tension between honoring your heritage and forging your own path. Like him, you sometimes feel misunderstood and are searching for your authentic self.",
-                        low: "You have some similarities to Gogol, particularly in questioning established norms and seeking independence. However, you may be more comfortable with your identity and less conflicted about your cultural background."
+                        high: "You question identity, tradition, and your place in the world. Like Gogol, you sometimes feel caught between different expectations and value independence.",
+                        medium: "You understand the tension between honoring heritage and forging your own path, sometimes feeling misunderstood.",
+                        low: "You share some of Gogol's independence and questioning nature, though you may be more comfortable with your identity."
                     }
                 };
                 
-                if (percentage >= 70) return messages[character].high;
-                if (percentage >= 50) return messages[character].medium;
-                return messages[character].low;
+                if (percentage >= 60) return descriptions[character].high;
+                if (percentage >= 35) return descriptions[character].medium;
+                return descriptions[character].low;
             }
             
             showResults() {
-                const result = this.calculateCharacterMatch();
-                const message = this.getCharacterMessage(result.character, result.percentage);
+                const results = this.calculateAllCharacterScores();
                 const content = document.getElementById('content');
                 
                 content.innerHTML = `
                     <div class="result-container fade-in">
-                        <h2 class="result-title">Quiz Complete!</h2>
+                        <h2 class="result-title">Your Character Similarity Results</h2>
                         
-                        <div class="percentage-display">
-                            <div class="percentage-number">${result.percentage}%</div>
-                            <div class="percentage-label">Match with ${result.character}</div>
+                        <div class="character-results">
+                            <div class="character-score ashima ${results.topCharacter === 'Ashima' ? 'highest-match' : ''}">
+                                <div class="character-name">Ashima</div>
+                                <div class="character-percentage">${results.ashima.percentage}%</div>
+                                <div class="character-description">${this.getCharacterDescription('Ashima', results.ashima.percentage)}</div>
+                            </div>
+                            
+                            <div class="character-score ashoke ${results.topCharacter === 'Ashoke' ? 'highest-match' : ''}">
+                                <div class="character-name">Ashoke</div>
+                                <div class="character-percentage">${results.ashoke.percentage}%</div>
+                                <div class="character-description">${this.getCharacterDescription('Ashoke', results.ashoke.percentage)}</div>
+                            </div>
+                            
+                            <div class="character-score gogol ${results.topCharacter === 'Gogol' ? 'highest-match' : ''}">
+                                <div class="character-name">Gogol</div>
+                                <div class="character-percentage">${results.gogol.percentage}%</div>
+                                <div class="character-description">${this.getCharacterDescription('Gogol', results.gogol.percentage)}</div>
+                            </div>
                         </div>
                         
-                        <p class="result-message">${message}</p>
+                        <p style="font-size: 1.1rem; color: #666; margin: 20px 0;">
+                            Your closest match is <strong style="color: #667eea;">${results.topCharacter}</strong>!
+                        </p>
                         
                         <button class="btn btn-restart" onclick="quiz.restartQuiz()">Take Quiz Again</button>
                     </div>
