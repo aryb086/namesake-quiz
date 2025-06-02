@@ -86,6 +86,28 @@
             line-height: 1.5;
         }
 
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .question-counter {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
         .btn {
             padding: 15px 30px;
             font-size: 1.1rem;
@@ -196,6 +218,7 @@
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
             box-shadow: 0 10px 30px rgba(240, 147, 251, 0.3);
+            transform: scale(1.02);
         }
 
         .highest-match .character-name,
@@ -244,59 +267,57 @@
     <script>
         class NamesakeQuiz {
             constructor() {
+                // Simplified approach: linear questions with varying weights
                 this.questions = [
-                    // Index 0 - Starting question
-                    {text: 'Do you sometimes feel like you don\'t quite belong anywhere?', nextIfYes: 1, nextIfNo: 2, ashimaScore: 2, ashokeScore: 1, gogolScore: 2},
-                    
-                    // Index 1-2 - Level 2
-                    {text: 'Do you find comfort in maintaining traditions and routines?', nextIfYes: 3, nextIfNo: 4, ashimaScore: 2, ashokeScore: 2, gogolScore: 0},
-                    {text: 'Are you someone who adapts easily to new situations?', nextIfYes: 5, nextIfNo: 6, ashimaScore: 0, ashokeScore: 2, gogolScore: 1},
-                    
-                    // Index 3-6 - Level 3
-                    {text: 'Do you believe that family should always come first?', nextIfYes: 7, nextIfNo: 8, ashimaScore: 2, ashokeScore: 2, gogolScore: 0},
-                    {text: 'Do you often feel misunderstood by the people around you?', nextIfYes: 9, nextIfNo: 10, ashimaScore: 1, ashokeScore: 0, gogolScore: 2},
-                    {text: 'Are you comfortable taking risks for new opportunities?', nextIfYes: 11, nextIfNo: 12, ashimaScore: 0, ashokeScore: 2, gogolScore: 1},
-                    {text: 'Do you prefer to keep your personal struggles to yourself?', nextIfYes: 13, nextIfNo: 14, ashimaScore: 2, ashokeScore: 1, gogolScore: 1},
-                    
-                    // Index 7-14 - Level 4
-                    {text: 'Do you find strength in your cultural heritage and values?', nextIfYes: 15, nextIfNo: 16, ashimaScore: 2, ashokeScore: 2, gogolScore: 0},
-                    {text: 'Do you sometimes rebel against expectations placed on you?', nextIfYes: 17, nextIfNo: 18, ashimaScore: 0, ashokeScore: 0, gogolScore: 2},
-                    {text: 'Are you someone who sacrifices personal desires for family harmony?', nextIfYes: 19, nextIfNo: 20, ashimaScore: 2, ashokeScore: 1, gogolScore: 0},
-                    {text: 'Do you believe that education and hard work can overcome any obstacle?', nextIfYes: 21, nextIfNo: 22, ashimaScore: 1, ashokeScore: 2, gogolScore: 0},
-                    {text: 'Are you pragmatic and good at making difficult decisions?', nextIfYes: 23, nextIfNo: 24, ashimaScore: 1, ashokeScore: 2, gogolScore: 0},
-                    {text: 'Do you often feel homesick or nostalgic for a place you can\'t return to?', nextIfYes: 25, nextIfNo: 26, ashimaScore: 2, ashokeScore: 1, gogolScore: 1},
-                    {text: 'Do you worry about losing touch with your roots?', nextIfYes: 27, nextIfNo: 28, ashimaScore: 2, ashokeScore: 1, gogolScore: 0},
-                    {text: 'Are you someone who questions authority and established ways of doing things?', nextIfYes: 29, nextIfNo: 30, ashimaScore: 0, ashokeScore: 0, gogolScore: 2},
-                    
-                    // Index 15-30 - Level 5 (Final questions)
-                    {text: 'Do you find joy in cooking and sharing meals with others?', nextIfYes: null, nextIfNo: null, ashimaScore: 2, ashokeScore: 1, gogolScore: 0},
-                    {text: 'Are you someone who embraces change as an opportunity for growth?', nextIfYes: null, nextIfNo: null, ashimaScore: 0, ashokeScore: 2, gogolScore: 1},
-                    {text: 'Do you sometimes feel caught between different versions of yourself?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 0, gogolScore: 2},
-                    {text: 'Do you believe that love should transcend cultural and social boundaries?', nextIfYes: null, nextIfNo: null, ashimaScore: 0, ashokeScore: 1, gogolScore: 2},
-                    {text: 'Are you someone who values stability and security above adventure?', nextIfYes: null, nextIfNo: null, ashimaScore: 2, ashokeScore: 1, gogolScore: 0},
-                    {text: 'Do you feel responsible for preserving your family\'s traditions?', nextIfYes: null, nextIfNo: null, ashimaScore: 2, ashokeScore: 1, gogolScore: 0},
-                    {text: 'Are you comfortable being different from those around you?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 2, gogolScore: 0},
-                    {text: 'Do you sometimes feel guilty about wanting independence?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 0, gogolScore: 2},
-                    {text: 'Are you someone who finds beauty in literature and the arts?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 2, gogolScore: 1},
-                    {text: 'Do you believe that people should create their own identity rather than inherit it?', nextIfYes: null, nextIfNo: null, ashimaScore: 0, ashokeScore: 1, gogolScore: 2},
-                    {text: 'Are you someone who prefers to blend in rather than stand out?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 1, gogolScore: 2},
-                    {text: 'Do you find comfort in routine and familiar surroundings?', nextIfYes: null, nextIfNo: null, ashimaScore: 2, ashokeScore: 1, gogolScore: 0},
-                    {text: 'Are you willing to make personal sacrifices for the people you love?', nextIfYes: null, nextIfNo: null, ashimaScore: 2, ashokeScore: 2, gogolScore: 1},
-                    {text: 'Do you believe that names and labels define who we are?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 0, gogolScore: 2},
-                    {text: 'Are you someone who sees challenges as opportunities to prove yourself?', nextIfYes: null, nextIfNo: null, ashimaScore: 1, ashokeScore: 2, gogolScore: 1},
-                    {text: 'Do you believe that home is more about people than places?', nextIfYes: null, nextIfNo: null, ashimaScore: 2, ashokeScore: 2, gogolScore: 1}
+                    {text: 'Do you sometimes feel like you don\'t quite belong anywhere?', ashima: 1, ashoke: 0, gogol: 3},
+                    {text: 'Do you find comfort in maintaining traditions and routines?', ashima: 3, ashoke: 2, gogol: 0},
+                    {text: 'Are you someone who adapts easily to new situations?', ashima: 1, ashoke: 3, gogol: 1},
+                    {text: 'Do you believe that family should always come first?', ashima: 3, ashoke: 2, gogol: 0},
+                    {text: 'Do you often feel misunderstood by the people around you?', ashima: 1, ashoke: 0, gogol: 3},
+                    {text: 'Are you comfortable taking risks for new opportunities?', ashima: 0, ashoke: 3, gogol: 2},
+                    {text: 'Do you prefer to keep your personal struggles to yourself?', ashima: 2, ashoke: 2, gogol: 1},
+                    {text: 'Do you find strength in your cultural heritage and values?', ashima: 3, ashoke: 3, gogol: 0},
+                    {text: 'Do you sometimes rebel against expectations placed on you?', ashima: 0, ashoke: 1, gogol: 3},
+                    {text: 'Are you someone who sacrifices personal desires for family harmony?', ashima: 3, ashoke: 2, gogol: 0},
+                    {text: 'Do you believe that education and hard work can overcome any obstacle?', ashima: 2, ashoke: 3, gogol: 1},
+                    {text: 'Are you pragmatic and good at making difficult decisions?', ashima: 2, ashoke: 3, gogol: 1},
+                    {text: 'Do you often feel homesick or nostalgic for a place you can\'t return to?', ashima: 3, ashoke: 2, gogol: 1},
+                    {text: 'Do you worry about losing touch with your roots?', ashima: 3, ashoke: 2, gogol: 1},
+                    {text: 'Are you someone who questions authority and established ways of doing things?', ashima: 0, ashoke: 1, gogol: 3},
+                    {text: 'Do you find joy in cooking and sharing meals with others?', ashima: 3, ashoke: 1, gogol: 0},
+                    {text: 'Are you someone who embraces change as an opportunity for growth?', ashima: 1, ashoke: 3, gogol: 2},
+                    {text: 'Do you sometimes feel caught between different versions of yourself?', ashima: 1, ashoke: 0, gogol: 3},
+                    {text: 'Do you believe that love should transcend cultural and social boundaries?', ashima: 0, ashoke: 2, gogol: 3},
+                    {text: 'Are you someone who values stability and security above adventure?', ashima: 3, ashoke: 1, gogol: 0},
+                    {text: 'Do you feel responsible for preserving your family\'s traditions?', ashima: 3, ashoke: 2, gogol: 0},
+                    {text: 'Are you comfortable being different from those around you?', ashima: 1, ashoke: 3, gogol: 2},
+                    {text: 'Do you sometimes feel guilty about wanting independence?', ashima: 2, ashoke: 0, gogol: 3},
+                    {text: 'Are you someone who finds beauty in literature and the arts?', ashima: 1, ashoke: 3, gogol: 2},
+                    {text: 'Do you believe that people should create their own identity rather than inherit it?', ashima: 0, ashoke: 2, gogol: 3},
+                    {text: 'Are you someone who prefers to blend in rather than stand out?', ashima: 2, ashoke: 1, gogol: 0},
+                    {text: 'Do you find comfort in routine and familiar surroundings?', ashima: 3, ashoke: 2, gogol: 0},
+                    {text: 'Are you willing to make personal sacrifices for the people you love?', ashima: 3, ashoke: 3, gogol: 1},
+                    {text: 'Do you believe that names and labels are important parts of identity?', ashima: 2, ashoke: 1, gogol: 0},
+                    {text: 'Are you someone who sees challenges as opportunities to prove yourself?', ashima: 1, ashoke: 3, gogol: 2}
                 ];
                 
+                this.currentQuestionIndex = 0;
                 this.answers = [];
-                this.currentIndex = 0;
-                this.showIntro = true;
-                this.quizComplete = false;
+                this.totalQuestions = 12; // Show 12 random questions
+                this.selectedQuestions = [];
                 
                 this.init();
             }
             
             init() {
+                this.selectRandomQuestions();
                 this.showIntroScreen();
+            }
+            
+            selectRandomQuestions() {
+                // Shuffle and select random questions
+                const shuffled = [...this.questions].sort(() => 0.5 - Math.random());
+                this.selectedQuestions = shuffled.slice(0, this.totalQuestions);
             }
             
             showIntroScreen() {
@@ -304,23 +325,33 @@
                 content.innerHTML = `
                     <div class="fade-in">
                         <h2 style="font-size: 1.8rem; margin-bottom: 20px; color: #333;">Welcome to the Namesake Character Quiz!</h2>
-                        <p class="intro-text">Discover your similarity to each character from Jhumpa Lahiri's "The Namesake": Ashima, Ashoke, and Gogol</p>
+                        <p class="intro-text">Discover your similarity to each character from Jhumpa Lahiri's "The Namesake": Ashima, Ashoke, and Gogol.<br><br>You'll answer ${this.totalQuestions} questions to see which character you're most like.</p>
                         <button class="btn btn-primary" onclick="quiz.startQuiz()">Start Quiz</button>
                     </div>
                 `;
             }
             
             startQuiz() {
-                this.showIntro = false;
+                this.currentQuestionIndex = 0;
                 this.showQuestion();
             }
             
             showQuestion() {
-                const question = this.questions[this.currentIndex];
+                if (this.currentQuestionIndex >= this.totalQuestions) {
+                    this.showResults();
+                    return;
+                }
+                
+                const question = this.selectedQuestions[this.currentQuestionIndex];
+                const progress = ((this.currentQuestionIndex + 1) / this.totalQuestions) * 100;
                 const content = document.getElementById('content');
                 
                 content.innerHTML = `
                     <div class="fade-in">
+                        <div class="question-counter">Question ${this.currentQuestionIndex + 1} of ${this.totalQuestions}</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${progress}%"></div>
+                        </div>
                         <p class="question-text">${question.text}</p>
                         <div>
                             <button class="btn btn-yes" onclick="quiz.handleAnswer(true)">Yes</button>
@@ -331,25 +362,18 @@
             }
             
             handleAnswer(isYes) {
-                const current = this.questions[this.currentIndex];
-                const nextIndex = isYes ? current.nextIfYes : current.nextIfNo;
+                const question = this.selectedQuestions[this.currentQuestionIndex];
                 
                 this.answers.push({
-                    question: current.text,
-                    answer: isYes ? 'Yes' : 'No',
-                    userAnswer: isYes,
-                    ashimaScore: isYes ? current.ashimaScore : 0,
-                    ashokeScore: isYes ? current.ashokeScore : 0,
-                    gogolScore: isYes ? current.gogolScore : 0
+                    question: question.text,
+                    answer: isYes,
+                    ashimaScore: isYes ? question.ashima : 0,
+                    ashokeScore: isYes ? question.ashoke : 0,
+                    gogolScore: isYes ? question.gogol : 0
                 });
                 
-                if (nextIndex === null) {
-                    this.quizComplete = true;
-                    this.showResults();
-                } else {
-                    this.currentIndex = nextIndex;
-                    this.showQuestion();
-                }
+                this.currentQuestionIndex++;
+                this.showQuestion();
             }
             
             calculateAllCharacterScores() {
@@ -363,8 +387,8 @@
                     gogolTotal += answer.gogolScore;
                 }
                 
-                // Calculate maximum possible score for percentage calculation
-                const maxPossibleScore = this.answers.length * 2;
+                // Calculate maximum possible score (if someone answered "yes" to all highest-weighted questions)
+                const maxPossibleScore = this.totalQuestions * 3; // 3 is the highest weight
                 
                 const ashimaPercentage = Math.round((ashimaTotal / maxPossibleScore) * 100);
                 const ashokePercentage = Math.round((ashokeTotal / maxPossibleScore) * 100);
@@ -388,24 +412,24 @@
             getCharacterDescription(character, percentage) {
                 const descriptions = {
                     'Ashima': {
-                        high: "You deeply value family, tradition, and cultural heritage. Like Ashima, you find strength in maintaining connections to your roots while adapting to new circumstances.",
-                        medium: "You appreciate tradition and family bonds, though you may be more open to change than Ashima initially was.",
-                        low: "You share some of Ashima's appreciation for family and stability, though you may be more willing to embrace individual freedom."
+                        high: "You deeply value family, tradition, and cultural heritage. Like Ashima, you find strength in maintaining connections to your roots and creating a sense of home through love and care.",
+                        medium: "You appreciate tradition and family bonds, balancing respect for heritage with adaptation to new circumstances.",
+                        low: "You share some of Ashima's values around family, though you may be more open to change and individual expression."
                     },
                     'Ashoke': {
-                        high: "You're pragmatic, optimistic, and believe in the power of education and hard work. Like Ashoke, you're willing to take risks for better opportunities.",
-                        medium: "You're thoughtful and adaptable, with a strong belief in creating opportunities for yourself and others.",
-                        low: "You share some of Ashoke's practical approach to life, though you may approach change and sacrifice differently."
+                        high: "You're pragmatic, optimistic, and believe in education and hard work. Like Ashoke, you embrace opportunities for growth and find meaning in literature and learning.",
+                        medium: "You're thoughtful and adaptable, with a practical approach to life's challenges and a belief in perseverance.",
+                        low: "You share some of Ashoke's optimism and practical nature, though you may approach risk and change differently."
                     },
                     'Gogol': {
-                        high: "You question identity, tradition, and your place in the world. Like Gogol, you sometimes feel caught between different expectations and value independence.",
-                        medium: "You understand the tension between honoring heritage and forging your own path, sometimes feeling misunderstood.",
-                        low: "You share some of Gogol's independence and questioning nature, though you may be more comfortable with your identity."
+                        high: "You question identity, tradition, and belonging. Like Gogol, you value independence, sometimes feel misunderstood, and believe in creating your own path in life.",
+                        medium: "You understand the tension between heritage and self-determination, sometimes feeling caught between different worlds.",
+                        low: "You share some of Gogol's independent spirit and questioning nature, though you may be more comfortable with traditional expectations."
                     }
                 };
                 
                 if (percentage >= 60) return descriptions[character].high;
-                if (percentage >= 35) return descriptions[character].medium;
+                if (percentage >= 30) return descriptions[character].medium;
                 return descriptions[character].low;
             }
             
@@ -447,10 +471,9 @@
             }
             
             restartQuiz() {
-                this.currentIndex = 0;
+                this.currentQuestionIndex = 0;
                 this.answers = [];
-                this.quizComplete = false;
-                this.showIntro = true;
+                this.selectRandomQuestions(); // Get new random questions
                 this.showIntroScreen();
             }
         }
