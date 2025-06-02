@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namesake Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 30px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 1.2px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .content {
+            padding: 40px 30px;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin: 8px;
+            min-width: 120px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+            color: white;
+        }
+
+        .btn-restart {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+
+        .result-container {
+            text-align: center;
+        }
+
+        .result-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .percentage-display {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(240, 147, 251, 0.3);
+        }
+
+        .percentage-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .percentage-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .result-message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #555;
+            margin: 20px 0;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Namesake Quiz</h1>
+            <p class="subtitle">By Ron, Nihar, Aryan, Miraya, and Harjas</p>
+        </div>
+        
+        <div class="content" id="content">
+            <!-- Content will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        class NamesakeQuiz {
+            constructor() {
+                this.questions = [
+                    // Index 0 - Starting question
+                    {text: 'Do you sometimes feel uncomfortable with your cultural identity?', nextIfYes: 1, nextIfNo: 2, gogolAnswer: true},
+                    
+                    // Index 1-2 - Level 2
+                    {text: 'Have you ever wanted to change something fundamental about yourself?', nextIfYes: 3, nextIfNo: 4, gogolAnswer: true},
+                    {text: 'Do you feel more comfortable blending in rather than standing out?', nextIfYes: 5, nextIfNo: 6, gogolAnswer: true},
+                    
+                    // Index 3-6 - Level 3
+                    {text: 'Do you think your name affects how others perceive you?', nextIfYes: 7, nextIfNo: 8, gogolAnswer: true},
+                    {text: 'Have you ever felt embarrassed by your family\'s traditions?', nextIfYes: 9, nextIfNo: 10, gogolAnswer: true},
+                    {text: 'Do you prefer to keep your personal life private from most people?', nextIfYes: 11, nextIfNo: 12, gogolAnswer: true},
+                    {text: 'Would you rather have a more common, easily pronounced name?', nextIfYes: 13, nextIfNo: 14, gogolAnswer: true},
+                    
+                    // Index 7-14 - Level 4
+                    {text: 'Do you sometimes feel caught between two different cultures?', nextIfYes: 15, nextIfNo: 16, gogolAnswer: true},
+                    {text: 'Have you ever lied about or hidden aspects of your background?', nextIfYes: 17, nextIfNo: 18, gogolAnswer: true},
+                    {text: 'Do you value your independence over family expectations?', nextIfYes: 19, nextIfNo: 20, gogolAnswer: true},
+                    {text: 'Would you choose love over family approval?', nextIfYes: 21, nextIfNo: 22, gogolAnswer: true},
+                    {text: 'Do you feel like you don\'t fully belong in either of your cultures?', nextIfYes: 23, nextIfNo: 24, gogolAnswer: true},
+                    {text: 'Have you ever felt ashamed of your parents\' accent or mannerisms?', nextIfYes: 25, nextIfNo: 26, gogolAnswer: true},
+                    {text: 'Do you think having a different name would make life easier?', nextIfYes: 27, nextIfNo: 28, gogolAnswer: true},
+                    {text: 'Do you sometimes rebel against your family\'s expectations?', nextIfYes: 29, nextIfNo: 30, gogolAnswer: true},
+                    
+                    // Index 15-30 - Level 5 (Final questions)
+                    {text: 'Do you struggle with accepting yourself as you are?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
+                    {text: 'Have you ever felt like an outsider in your own community?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
+                    {text: 'Do you find it hard to explain your identity to others?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
+                    {text: 'Would you rather fit in than be true to your heritage?', nextIfYes: null, nextIfNo: null, gogolAnswer: false},
+                    {text: 'Do you feel pressure to succeed academically or professionally?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
+                    {text: 'Have you ever felt disconnected from your parents\' homeland?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
+                    {text: 'Do you think your cultural background is a burden sometimes?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
+                    {text: 'Would you be willing to change yourself to be accepted by others?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
+                    {text: 'Do you ever feel guilty about wanting to be different from your family?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
+                    {text: 'Have you ever wished you were born into a different family?', nextIfYes: null, nextIfNo: null, gogolAnswer: false},
+                    {text: 'Do you find it difficult to date outside your cultural background?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
+                    {text: 'Would you hide your real name on a first date?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
+                    {text: 'Do you feel like you have to choose between being American and your heritage?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
+                    {text: 'Have you ever felt like your parents don\'t understand you?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
+                    {text: 'Do you think identity should be chosen rather than inherited?', nextIfYes: null, nextIfNo: null, gogolAnswer: true},
+                    {text: 'Would you rather be judged for who you are than what you represent?', nextIfYes: null, nextIfNo: null, gogolAnswer: true}
+                ];
+                
+                this.answers = [];
+                this.currentIndex = 0;
+                this.showIntro = true;
+                this.quizComplete = false;
+                
+                this.init();
+            }
+            
+            init() {
+                this.showIntroScreen();
+            }
+            
+            showIntroScreen() {
+                const content = document.getElementById('content');
+                content.innerHTML = `
+                    <div class="fade-in">
+                        <h2 style="font-size: 1.8rem; margin-bottom: 20px; color: #333;">Welcome to the Namesake Quiz!</h2>
+                        <p class="intro-text">Discover how similar you are to Gogol from Jhumpa Lahiri's "The Namesake"</p>
+                        <button class="btn btn-primary" onclick="quiz.startQuiz()">Start Quiz</button>
+                    </div>
+                `;
+            }
+            
+            startQuiz() {
+                this.showIntro = false;
+                this.showQuestion();
+            }
+            
+            showQuestion() {
+                const question = this.questions[this.currentIndex];
+                const content = document.getElementById('content');
+                
+                content.innerHTML = `
+                    <div class="fade-in">
+                        <p class="question-text">${question.text}</p>
+                        <div>
+                            <button class="btn btn-yes" onclick="quiz.handleAnswer(true)">Yes</button>
+                            <button class="btn btn-no" onclick="quiz.handleAnswer(false)">No</button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            handleAnswer(isYes) {
+                const current = this.questions[this.currentIndex];
+                const nextIndex = isYes ? current.nextIfYes : current.nextIfNo;
+                
+                this.answers.push({
+                    question: current.text,
+                    answer: isYes ? 'Yes' : 'No',
+                    userAnswer: isYes
+                });
+                
+                if (nextIndex === null) {
+                    this.quizComplete = true;
+                    this.showResults();
+                } else {
+                    this.currentIndex = nextIndex;
+                    this.showQuestion();
+                }
+            }
+            
+            calculateSimilarityPercentage() {
+                let matches = 0;
+                for (let i = 0; i < this.answers.length; i++) {
+                    const answerRecord = this.answers[i];
+                    const questionIndex = this.questions.findIndex(q => q.text === answerRecord.question);
+                    if (questionIndex !== -1) {
+                        const question = this.questions[questionIndex];
+                        if (answerRecord.userAnswer === question.gogolAnswer) {
+                            matches++;
+                        }
+                    }
+                }
+                return Math.round((matches / this.answers.length) * 100);
+            }
+            
+            getSimilarityMessage(percentage) {
+                if (percentage >= 80) {
+                    return "You and Gogol are remarkably similar! Like him, you struggle with identity, belonging, and the tension between heritage and personal freedom.";
+                } else if (percentage >= 60) {
+                    return "You share many traits with Gogol. You understand the challenges of navigating between cultures and finding your own path.";
+                } else if (percentage >= 40) {
+                    return "You have some similarities with Gogol, particularly in questioning identity and seeking acceptance, though your approaches may differ.";
+                } else if (percentage >= 20) {
+                    return "You share a few traits with Gogol, but you seem more comfortable with your identity and cultural background than he was.";
+                } else {
+                    return "You and Gogol are quite different. You appear more confident in your identity and comfortable with your heritage.";
+                }
+            }
+            
+            showResults() {
+                const percentage = this.calculateSimilarityPercentage();
+                const message = this.getSimilarityMessage(percentage);
+                const content = document.getElementById('content');
+                
+                content.innerHTML = `
+                    <div class="result-container fade-in">
+                        <h2 class="result-title">Quiz Complete!</h2>
+                        
+                        <div class="percentage-display">
+                            <div class="percentage-number">${percentage}%</div>
+                            <div class="percentage-label">Similar to Gogol</div>
+                        </div>
+                        
+                        <p class="result-message">${message}</p>
+                        
+                        <button class="btn btn-restart" onclick="quiz.restartQuiz()">Take Quiz Again</button>
+                    </div>
+                `;
+            }
+            
+            restartQuiz() {
+                this.currentIndex = 0;
+                this.answers = [];
+                this.quizComplete = false;
+                this.showIntro = true;
+                this.showIntroScreen();
+            }
+        }
+        
+        // Initialize the quiz when the page loads
+        let quiz;
+        window.addEventListener('DOMContentLoaded', function() {
+            quiz = new NamesakeQuiz();
+        });
+    </script>
+</body>
+</html>
